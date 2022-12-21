@@ -4,13 +4,13 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.0
 jobs:
   frontend:
-    working_directory: ~/app/udagram-frontend
+    working_directory: ~/app/udagram/udagram-frontend
     executor: node/default
     steps:
       - checkout:
           path: ~/app
       - node/install-packages:
-          app-dir: ~/app/udagram-frontend
+          app-dir: ~/app/udagram/udagram-frontend
       - run:
           name: Build Frontend
           command: npm run build
@@ -19,13 +19,13 @@ jobs:
           name: Deploy Frontend
           command: aws s3 cp --recursive --acl public-read ./www $S3_BUCKET_FRONTEND
   server:
-    working_directory: ~/app/udagram-api
+    working_directory: ~/app/udagram/udagram-api
     executor: node/default
     steps:
       - checkout:
           path: ~/app
       - node/install-packages:
-          app-dir: ~/app/udagram-api
+          app-dir: ~/app/udagram/udagram-api
       - aws-cli/install
       - run:
           name: Deploy Server
