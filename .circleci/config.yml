@@ -17,7 +17,7 @@ jobs:
       - aws-cli/install
       - run:
           name: Deploy Frontend
-          command: aws s3 cp --recursive --acl public-read ./www $S3_BUCKET_FRONTEND
+          command: aws s3 cp --recursive --acl public-read ./www aws:s3:::udagram-reema
   server:
     working_directory: ~/app/udagram/udagram-api
     executor: node/default
