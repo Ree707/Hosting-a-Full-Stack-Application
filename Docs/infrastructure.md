@@ -7,7 +7,7 @@ postgresql://postgres:postgres@database-1.c5pdi7dsv4do.us-east-1.rds.amazonaws.c
 
 ## Elastic Beanstalk
 Deploy and manage web applications
-http://udagram-api-dev.eba-gpmqy8bc.us-east-1.elasticbeanstalk.com/ 
+http://udagram-api-dev.eba-mrgpkzzx.us-east-1.elasticbeanstalk.com/
 
 ## S3 Bucket
 Simple Storage Service thrugh a web interface presented to end users 
