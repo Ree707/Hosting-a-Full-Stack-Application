@@ -9,3 +9,4 @@ export AWS_REGION=us-east-1
 export AWS_PROFILE=default
 export JWT_SECRET=secret
 export URL=http://udagram-api-dev.eba-mrgpkzzx.us-east-1.elasticbeanstalk.com
+export AWS_DEFAULT_REGION="us-east-1"
