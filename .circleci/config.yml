@@ -17,7 +17,7 @@ jobs:
       - aws-cli/install
       - run:
           name: Deploy Frontend
-          command: aws s3 cp --recursive --acl public-read ./www $S3_BUCKET_FRONTEND
+          command: npm run deploy
   server:
     working_directory: ~/app/udagram/udagram-api
     executor: node/default
@@ -29,11 +29,7 @@ jobs:
       - aws-cli/install
       - run:
           name: Deploy Server
-          command: |-
-            aws s3 cp ./www/Archive.zip $S3_BUCKET_SERVER
-            aws elasticbeanstalk create-application-version --application-name $EB_APP --version-label <<pipeline.git.revision>> --source-bundle S3Bucket="$EB_BUCKET",S3Key="Archive.zip"
-            aws elasticbeanstalk update-environment --application-name $EB_APP --environment-name $EB_ENV --version-label <<pipeline.git.revision>>
-
+          command: npm run deploy
 workflows:
   build_and_deploy:
     jobs:
