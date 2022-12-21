@@ -11,9 +11,7 @@ jobs:
           path: ~/app
       - node/install-packages:
           app-dir: ~/app/udagram/udagram-frontend
-      - run:
-          name: Install AWS dependencies
-          command: sudo pip install awsebcli
+      - aws-cli/install
       - run:
           name: Build Frontend
           command: npm run build
@@ -28,9 +26,7 @@ jobs:
           path: ~/app
       - node/install-packages:
           app-dir: ~/app/udagram/udagram-api
-      - run:
-          name: Install AWS dependencies
-          command: sudo pip install awsebcli
+      - aws-cli/install
       - run:
           name: Deploy Server
           command: npm run deploy
