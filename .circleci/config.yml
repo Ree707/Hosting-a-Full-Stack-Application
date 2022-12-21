@@ -1,47 +1,74 @@
 version: 2.1
 orbs:
-  node: circleci/node@4.2.0
-  aws-cli: circleci/aws-cli@2.0.0
+  # orgs contain basc recipes and reproducible actions (install node, aws, etc.)
+  node: circleci/node@5.0.2
+  eb: circleci/aws-elastic-beanstalk@2.0.1
+  aws-cli: circleci/aws-cli@3.1.1
+  # different jobs are calles later in the workflows sections
 jobs:
-  frontend:
-    working_directory: ~/app/udagram/udagram-frontend
-    executor: node/default
+  build:
+    docker:
+      # the base image can run most needed actions with orbs
+      - image: "cimg/node:14.15"
     steps:
-      - checkout:
-          path: ~/app
-      - node/install-packages:
-          app-dir: ~/app/udagram/udagram-frontend
+      # install node and checkout code
+      - node/install:
+          node-version: '14.15'         
+      - checkout
+      # Use root level package.json to install dependencies in the frontend app
       - run:
-          name: Build Frontend
+          name: Install Front-End Dependencies
+          command: |
+            echo "NODE --version" 
+            echo $(node --version)
+            echo "NPM --version" 
+            echo $(npm --version)
+            npm run frontend:install
+      # TODO: Install dependencies in the the backend API          
+      - run:
+          name: Install API Dependencies
+          command: npm run build 
+      # TODO: Lint the frontend
+      - run:
+          name: Front-End Lint
+          command: |
+            echo "TODO: Lint the frontend"
+      # TODO: Build the frontend app
+      - run:
+          name: Front-End Build
           command: npm run build
-      - aws-cli/install
+      # TODO: Build the backend API      
       - run:
-          name: Deploy Frontend
-          command: aws s3 cp --recursive --acl public-read ./www aws:s3:::udagram-reema
-  server:
-    working_directory: ~/app/udagram/udagram-api
-    executor: node/default
+          name: API Build
+          command: npm run build
+  # deploy step will run only after manual approval
+  deploy:
+    docker:
+      - image: "cimg/base:stable"
+      # more setup needed for aws, node, elastic beanstalk
     steps:
-      - checkout:
-          path: ~/app
-      - node/install-packages:
-          app-dir: ~/app/udagram/udagram-api
+      - node/install:
+          node-version: '14.15' 
+      - eb/setup
+      - aws-cli/setup
+      - checkout
       - run:
-          name: Build and Archive Server
-          command: |-
-            npm run build
-            printenv > www/.env
-            npm run archive
-      - aws-cli/install
-      - run:
-          name: Deploy Server
-          command: |-
-            aws s3 cp ./www/Archive.zip $S3_BUCKET_SERVER
-            aws elasticbeanstalk create-application-version --application-name $EB_APP --version-label <<pipeline.git.revision>> --source-bundle S3Bucket="$EB_BUCKET",S3Key="Archive.zip"
-            aws elasticbeanstalk update-environment --application-name $EB_APP --environment-name $EB_ENV --version-label <<pipeline.git.revision>>
-
+          name: Deploy App
+          # TODO: Install, build, deploy in both apps
+          command: npm run deploy
+            
 workflows:
-  build_and_deploy:
+  udagram:
     jobs:
-      - frontend
-      - server
+      - build
+      - hold:
+          filters:
+            branches:
+              only:
+                - master
+          type: approval
+          requires:
+            - build
+      - deploy:
+          requires:
+            - hold
