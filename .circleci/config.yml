@@ -10,11 +10,13 @@ jobs:
     docker:
       # the base image can run most needed actions with orbs
       - image: "cimg/node:14.15"
+    working_directory: ~/app/udagram
     steps:
       # install node and checkout code
       - node/install:
           node-version: '14.15'         
-      - checkout
+      - checkout: 
+          path: ~/udagram-fronted
       # Use root level package.json to install dependencies in the frontend app
       - run:
           name: Install Front-End Dependencies
@@ -24,12 +26,10 @@ jobs:
           name: Install API Dependencies
           command: npm install
       # TODO: Build the frontend app
-      working_directory: ~/app/udagram/udagram-frontend
       - run:
           name: Front-End Build
           command: npm run build 
       # TODO: Build the backend API 
-      working_directory: ~/app/udagram/udagram-api
       - run:
           name: API Build
           command: npm run build
@@ -38,12 +38,14 @@ jobs:
     docker:
       - image: "cimg/base:stable"
       # more setup needed for aws, node, elastic beanstalk
+    working_directory: ~/app/udagram
     steps:
       - node/install:
           node-version: '14.15' 
       - eb/setup
       - aws-cli/setup
-      - checkout
+      - checkout: 
+          path: ~/udagram-api
       - run:
           name: Deploy App
           # TODO: Install, build, deploy in both apps
