@@ -11,8 +11,9 @@ jobs:
     # install node and checkout code
       - node/install:
           node-version: '14.15'
-      - checkout:
+      - eb/setup
       - aws-cli/install
+      - checkout
       - run:
           name: Build Frontend
           command: npm run build
@@ -25,12 +26,9 @@ jobs:
     working_directory: ~/app/udagram/udagram-api
     executor: node/default
     steps:
-      - checkout:
-          path: ~/app
-      - node/install-packages:
-          app-dir: ~/app/udagram/udagram-api
       - aws-cli/install
       - eb/setup
+      - checkout
       - run:
           name: Deploy Server
           command: npm run deploy
