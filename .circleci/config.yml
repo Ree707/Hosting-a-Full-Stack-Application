@@ -15,6 +15,9 @@ jobs:
       - aws-cli/install
       - checkout
       - run:
+          name: Install Front-End Dependencies
+          command: npm install
+      - run:
           name: Build Frontend
           command: npm run build
       - aws-cli/install
@@ -29,6 +32,9 @@ jobs:
       - aws-cli/install
       - eb/setup
       - checkout
+      - run:
+          name: Install Back-End Dependencies
+          command: npm install
       - run:
           name: Build Backend
           command: npm run build
