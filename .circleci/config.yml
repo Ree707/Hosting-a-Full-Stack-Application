@@ -8,15 +8,10 @@ jobs:
     working_directory: ~/app/udagram/udagram-frontend
     executor: node/default
     steps:
-    # install node and checkout code
-      - node/install:
-          node-version: '14.15'
-      - eb/setup
-      - aws-cli/install
-      - checkout
-      - run:
-          name: Install Front-End Dependencies
-          command: npm install
+      - checkout:
+          path: ~/app
+      - node/install-packages:
+          app-dir: ~/app/udagram/udagram-frontend
       - run:
           name: Build Frontend
           command: npm run build
@@ -29,18 +24,15 @@ jobs:
     working_directory: ~/app/udagram/udagram-api
     executor: node/default
     steps:
+      - checkout:
+          path: ~/app
+      - node/install-packages:
+          app-dir: ~/app/udagram/udagram-api
       - aws-cli/install
       - eb/setup
-      - checkout
-      - run:
-          name: Install Back-End Dependencies
-          command: npm install
-      - run:
-          name: Build Backend
-          command: npm run build
       - run:
           name: Deploy Server
-          command: npm run deploy
+          command: npm run deploy 
 workflows:
   build_and_deploy:
     jobs:
