@@ -21,6 +21,9 @@ jobs:
           command: npm run build
       - aws-cli/install
       - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-region: AWS_REGION
+          aws-profile: AWS_PROFILE
           profile-name: default
       - run:
           name: Deploy Frontend
