@@ -43,5 +43,11 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
+      - hold:
+          filters:
+            branches:
+              only:
+                - master
+          type: approval
       - frontend
       - server
