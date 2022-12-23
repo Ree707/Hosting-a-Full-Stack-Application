@@ -20,7 +20,8 @@ jobs:
           name: Build Frontend
           command: npm run build
       - aws-cli/install
-      - eb/setup
+      - aws-cli/setup:
+          profile-name: default
       - run:
           name: Deploy Frontend
           command: aws s3 cp --recursive  ./www s3://udagram-reema/
