@@ -50,4 +50,8 @@ workflows:
                 - master
           type: approval
       - frontend
+          requires:
+            - hold
       - server
+          requires:
+            - hold
