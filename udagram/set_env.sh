@@ -1,14 +1,14 @@
 # This file is used for convenience of local development.
 # DO NOT STORE YOUR CREDENTIALS INTO GIT
-export POSTGRES_PASSWORD=postgres
-export POSTGRES_HOST=database-1.c5pdi7dsv4do.us-east-1.rds.amazonaws.com
-export POSTGRES_DB=postgres
-export AWS_BUCKET=arn:aws:s3:::udagram-reema
-export S3_BUCKET_FRONTEND= aws:s3:::udagram-reema
-export AWS_REGION=us-east-1
-export AWS_PROFILE=default
-export JWT_SECRET=secret
-export URL=http://udagram-api-dev.eba-mrgpkzzx.us-east-1.elasticbeanstalk.com
-export AWS_DEFAULT_REGION=us-east-1
-export profile=default
+eb setenv POSTGRES_PASSWORD=$POSTGRES_PASSWORD	
+eb setenv POSTGRES_HOST=$POSTGRES_HOST
+eb setenv POSTGRES_DB=$POSTGRES_DB
+eb setenv AWS_BUCKET=$AWS_BUCKET
+eb setenv S3_BUCKET_FRONTEND= $S3_BUCKET_FRONTEND
+eb setenv AWS_REGION=$AWS_DEFAULT_REGION
+eb setenv AWS_PROFILE=$AWS_PROFILE
+eb setenv JWT_SECRET=$JWT_SECRET
+eb setenv URL=http://udagram-api-dev.eba-mrgpkzzx.us-east-1.elasticbeanstalk.com
+eb setenv AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+eb setenv profile=$profile
 eb setenv PORT=$PORT USERNAME=$USERNAME
