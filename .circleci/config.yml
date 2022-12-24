@@ -50,8 +50,12 @@ workflows:
                 - master
           type: approval
       - frontend
-          requires:
-            - hold
+          filters:
+            branches:
+              only:
+                - master
       - server
-          requires:
-            - hold
+          filters:
+            branches:
+              only:
+                - master
