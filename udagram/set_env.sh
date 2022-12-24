@@ -1,6 +1,5 @@
 # This file is used for convenience of local development.
 # DO NOT STORE YOUR CREDENTIALS INTO GIT
-export POSTGRES_USERNAME=postgres
 export POSTGRES_PASSWORD=postgres
 export POSTGRES_HOST=database-1.c5pdi7dsv4do.us-east-1.rds.amazonaws.com
 export POSTGRES_DB=postgres
@@ -12,3 +11,4 @@ export JWT_SECRET=secret
 export URL=http://udagram-api-dev.eba-mrgpkzzx.us-east-1.elasticbeanstalk.com
 export AWS_DEFAULT_REGION=us-east-1
 export profile=default
+eb setenv PORT=$PORT USERNAME=$USERNAME
