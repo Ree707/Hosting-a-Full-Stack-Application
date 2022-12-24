@@ -49,12 +49,12 @@ workflows:
               only:
                 - master
           type: approval
-      - frontend
+      - frontend:
           filters:
             branches:
               only:
                 - master
-      - server
+      - server:
           filters:
             branches:
               only:
